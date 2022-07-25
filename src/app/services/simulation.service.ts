@@ -38,7 +38,7 @@ export class SimulationService {
     bUniforme: number,
     mediaExpNeg: number,
     cte: number
-  ): [Fila[], number, string[]] {
+  ): [Fila[], number, string[], number, number] {
     let evento = '';
     let reloj = -1;
     let llegada = -1;
@@ -77,6 +77,9 @@ export class SimulationService {
     // variables ausiliares
     let personas: Persona[] = [];
     let filas: Fila[] = [];
+    let esPrimerPersona: boolean = true;
+    let idPrimerPersona: number = 0;
+    let idUltimaPersona: number = 0;
 
     for (let i = 0; i < n; i++) {
       // sirve para determinar si se crea un objeto Persona
@@ -864,7 +867,12 @@ export class SimulationService {
 
       // agregar filas desdeHasta
       if (reloj >= desde && reloj <= hasta) {
+        if (esPrimerPersona) {
+          idPrimerPersona = persona.id;
+          esPrimerPersona = false;
+        }
         filas.push(this.transformarVectorEstadoAFila(vectorEstado));
+        idUltimaPersona = persona.id;
       }
 
       //Comparar si el reloj en cada iteracion es mayor que el x ingresado, en ese caso corta la simulacion.
@@ -894,7 +902,7 @@ export class SimulationService {
     // c) El porcentaje de personas que no pagan.
     consignas.push(((acumPersonasNoPagan / cantPersonas) * 100).toFixed(2));
 
-    return [filas, cantPersonas, consignas];
+    return [filas, cantPersonas, consignas, idPrimerPersona, idUltimaPersona];
   }
 
   private actualizarVectorEstado(vectorEstado: any, persona: Persona) {

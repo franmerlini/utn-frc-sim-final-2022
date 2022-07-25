@@ -99,25 +99,30 @@ export class SimulacionComponent implements OnInit {
       this.columnsService.resetColumns();
 
       try {
-        const [filas, cantPersonas, consignas] =
-          this.simulationService.simulate(
-            this.txtX.value,
-            this.txtN.value,
-            this.txtDesde.value,
-            this.txtHasta.value,
-            this.txtProbVencida.value,
-            this.txtProbActualiza.value,
-            this.txtProbPaga.value,
-            this.txtMediaPoisson.value,
-            this.txtAUniforme.value,
-            this.txtBUniforme.value,
-            this.txtMediaExpNeg.value,
-            this.txtCte.value
-          );
+        const [
+          filas,
+          cantPersonas,
+          consignas,
+          idPrimerPersona,
+          idUltimaPersona,
+        ] = this.simulationService.simulate(
+          this.txtX.value,
+          this.txtN.value,
+          this.txtDesde.value,
+          this.txtHasta.value,
+          this.txtProbVencida.value,
+          this.txtProbActualiza.value,
+          this.txtProbPaga.value,
+          this.txtMediaPoisson.value,
+          this.txtAUniforme.value,
+          this.txtBUniforme.value,
+          this.txtMediaExpNeg.value,
+          this.txtCte.value
+        );
 
         this.consignas = consignas;
 
-        for (let i = 1; i < cantPersonas; i++) {
+        for (let i = idPrimerPersona; i <= idUltimaPersona; i++) {
           this.columnsService.addColumn({
             columnDef: `estadoP${i}`,
             header: `Estado P${i}`,
