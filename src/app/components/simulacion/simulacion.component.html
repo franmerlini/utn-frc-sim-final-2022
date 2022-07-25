@@ -15,7 +15,7 @@
           <div class="col-sm-12 col-md-6 col-lg-3">
             <p><b>X</b> (tiempo a simular en segundos):</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtX" />
+              <input matInput formControlName="txtX" autocomplete="off" />
             </mat-form-field>
             <app-control-messages
               [control]="txtX"
@@ -26,7 +26,7 @@
           <div class="col-sm-12 col-md-6 col-lg-3">
             <p><b>N</b> (cantidad de iteraciones a simular):</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtN" />
+              <input matInput formControlName="txtN" autocomplete="off" />
             </mat-form-field>
             <app-control-messages
               [control]="txtN"
@@ -37,7 +37,7 @@
           <div class="col-sm-12 col-md-6 col-lg-3">
             <p>Mostrar iteraciones <b>desde</b> el segundo:</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtDesde" />
+              <input matInput formControlName="txtDesde" autocomplete="off" />
             </mat-form-field>
             <app-control-messages
               [control]="txtDesde"
@@ -48,7 +48,7 @@
           <div class="col-sm-12 col-md-6 col-lg-3">
             <p>Mostrar iteraciones <b>hasta</b> el segundo:</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtHasta" />
+              <input matInput formControlName="txtHasta" autocomplete="off" />
             </mat-form-field>
             <app-control-messages
               [control]="txtHasta"
@@ -66,7 +66,11 @@
           <div class="col-sm-12 col-md-6 col-lg-3">
             <p>Que tenga factura vencida:</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtProbVencida" />
+              <input
+                matInput
+                formControlName="txtProbVencida"
+                autocomplete="off"
+              />
             </mat-form-field>
             <app-control-messages
               [control]="txtProbVencida"
@@ -77,7 +81,11 @@
           <div class="col-sm-12 col-md-6 col-lg-3">
             <p>Que sepa de actualizar factura:</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtProbActualiza" />
+              <input
+                matInput
+                formControlName="txtProbActualiza"
+                autocomplete="off"
+              />
             </mat-form-field>
             <app-control-messages
               [control]="txtProbActualiza"
@@ -88,7 +96,11 @@
           <div class="col-sm-12 col-md-6 col-lg-3">
             <p>Que pague factura:</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtProbPaga" />
+              <input
+                matInput
+                formControlName="txtProbPaga"
+                autocomplete="off"
+              />
             </mat-form-field>
             <app-control-messages
               [control]="txtProbPaga"
@@ -108,7 +120,11 @@
           <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
             <p><b>&lambda;</b> (poisson):</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtMediaPoisson" />
+              <input
+                matInput
+                formControlName="txtMediaPoisson"
+                autocomplete="off"
+              />
             </mat-form-field>
             <app-control-messages
               [control]="txtMediaPoisson"
@@ -119,7 +135,11 @@
           <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
             <p><b>A</b> (uniforme):</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtAUniforme" />
+              <input
+                matInput
+                formControlName="txtAUniforme"
+                autocomplete="off"
+              />
             </mat-form-field>
             <app-control-messages
               [control]="txtAUniforme"
@@ -130,7 +150,11 @@
           <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
             <p><b>B</b> (uniforme):</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtBUniforme" />
+              <input
+                matInput
+                formControlName="txtBUniforme"
+                autocomplete="off"
+              />
             </mat-form-field>
             <app-control-messages
               [control]="txtBUniforme"
@@ -141,7 +165,11 @@
           <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
             <p><b>&lambda;</b> (exponencial negativa) :</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtMediaExpNeg" />
+              <input
+                matInput
+                formControlName="txtMediaExpNeg"
+                autocomplete="off"
+              />
             </mat-form-field>
             <app-control-messages
               [control]="txtMediaExpNeg"
@@ -152,7 +180,7 @@
           <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
             <p><b>C</b> (constante):</p>
             <mat-form-field appearance="outline">
-              <input matInput formControlName="txtCte" />
+              <input matInput formControlName="txtCte" autocomplete="off" />
             </mat-form-field>
             <app-control-messages
               [control]="txtCte"

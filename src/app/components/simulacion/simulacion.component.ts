@@ -31,6 +31,7 @@ export class SimulacionComponent implements OnInit {
   public displayedColumns: string[];
   public consignas: string[] = [];
   public submitted: boolean = false;
+  private prevValue: number;
 
   constructor(
     private fb: FormBuilder,
@@ -42,6 +43,7 @@ export class SimulacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.suscribeTxtAUniformeChanges();
   }
 
   private createForm(): void {
@@ -73,6 +75,15 @@ export class SimulacionComponent implements OnInit {
         [Validators.required, CustomValidators.positiveNumber],
       ],
       txtCte: ['', [Validators.required, CustomValidators.positiveNumber]],
+    });
+  }
+
+  public suscribeTxtAUniformeChanges(): void {
+    this.txtAUniforme.valueChanges.subscribe((value) => {
+      this.txtBUniforme.clearValidators();
+      this.txtBUniforme.addValidators([Validators.required]);
+      this.txtBUniforme.addValidators([Validators.min(value)]);
+      this.txtBUniforme.updateValueAndValidity();
     });
   }
 

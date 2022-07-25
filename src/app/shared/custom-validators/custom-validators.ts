@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
-const PROB_REGEXP = /^(0+\.?|0*\.\d+|0*1(\.0*)?)$/;
+const PROB_REGEXP = /^(0+\.?|0*\.\d+|0*0.99(\.0*)?)$/;
 const POSITIVE_NUMBER_REGEXP = /(^\d*\.?\d*[0-9]+\d*$)|(^[0-9]+\d*\.\d*$)/;
 
 export function isEmpty(value: any): boolean {
@@ -32,11 +32,12 @@ export class CustomValidators {
 }
 
 export class ErrorMessages {
-  public static messageOf(validatorName: string): string {
+  public static messageOf(validatorName: string, validatorValue?: any): string {
     const config: any = {
       required: 'El campo es requerido.',
-      probability: 'Ingresar sólo números entre 0 y 1.',
+      probability: 'Ingresar sólo números entre 0 y 1 (sin incluir el 1).',
       positiveNumber: 'Ingresar sólo números positivos.',
+      min: `El valor debe ser mayor o igual a ${validatorValue.min}.`,
     };
     return config[validatorName];
   }
