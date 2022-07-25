@@ -1,0 +1,533 @@
+<div class="container my-5">
+  <mat-card class="mt-5">
+    <div class="row">
+      <div class="col-12 mb-2">
+        <mat-card-title>Parámetros</mat-card-title>
+      </div>
+
+      <form [formGroup]="form" #formRef="ngForm">
+        <div class="row d-flex">
+          <div class="col-12">
+            <mat-divider></mat-divider>
+            <p class="mt-2"><u>Generales</u></p>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <p><b>X</b> (tiempo a simular en segundos):</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtX" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtX"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <p><b>N</b> (cantidad de iteraciones a simular):</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtN" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtN"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <p>Mostrar iteraciones <b>desde</b> el segundo:</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtDesde" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtDesde"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <p>Mostrar iteraciones <b>hasta</b> el segundo:</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtHasta" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtHasta"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+        </div>
+
+        <div class="row d-flex mt-3">
+          <div class="col-12">
+            <mat-divider></mat-divider>
+            <p class="mt-2"><u>Probabilidades</u></p>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <p>Que tenga factura vencida:</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtProbVencida" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtProbVencida"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <p>Que sepa de actualizar factura:</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtProbActualiza" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtProbActualiza"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <p>Que pague factura:</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtProbPaga" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtProbPaga"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+        </div>
+
+        <div class="row d-flex mt-3">
+          <div class="col-12">
+            <mat-divider></mat-divider>
+            <p class="mt-2">
+              <u>Valores para las distribuciones de probabilidad</u>
+            </p>
+          </div>
+
+          <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
+            <p><b>&lambda;</b> (poisson):</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtMediaPoisson" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtMediaPoisson"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
+            <p><b>A</b> (uniforme):</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtAUniforme" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtAUniforme"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
+            <p><b>B</b> (uniforme):</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtBUniforme" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtBUniforme"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
+            <p><b>&lambda;</b> (exponencial negativa) :</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtMediaExpNeg" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtMediaExpNeg"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+
+          <div class="col-xl-2 col-sm-12 col-md-6 col-lg-3">
+            <p><b>C</b> (constante):</p>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="txtCte" />
+            </mat-form-field>
+            <app-control-messages
+              [control]="txtCte"
+              [submitted]="submitted"
+            ></app-control-messages>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col d-flex justify-content-between">
+            <div>
+              <button
+                type="button"
+                mat-raised-button
+                color="warn"
+                class="me-2"
+                (click)="reset()"
+              >
+                Reiniciar
+              </button>
+            </div>
+            <div>
+              <button
+                type="button"
+                mat-raised-button
+                class="me-2"
+                (click)="loadDefaultValues()"
+              >
+                Valores por defecto
+              </button>
+
+              <button
+                type="submit"
+                mat-raised-button
+                color="primary"
+                (click)="simulate()"
+              >
+                Simular
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+
+  <mat-card class="mt-5" [hidden]="loading">
+    <div class="col">
+      <div class="d-flex justify-content-between mb-3">
+        <mat-card-title>Resultados de simulación</mat-card-title>
+        <button
+          mat-raised-button
+          (click)="
+            exporter.exportTable('xls', {
+              fileName: 'Simulacion Sistema de Cobros de Impuestos',
+              sheet: 'simulacion'
+            })
+          "
+        >
+          Exportar <mat-icon>get_app</mat-icon>
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="my-3">
+        <table class="consignas-table">
+          <tr>
+            <td>Tiempo promedio general de espera en cajas:</td>
+            <td>
+              <b>{{ consignas[0] }} s</b>
+            </td>
+          </tr>
+          <tr>
+            <td>Tiempo promedio de permanencia de las personas:</td>
+            <td>
+              <b>{{ consignas[1] }} s</b>
+            </td>
+          </tr>
+          <tr>
+            <td>Porcentaje de personas que no pagan:</td>
+            <td>
+              <b>{{ consignas[2] }} %</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div class="col mt-3 overflow-auto">
+      <table
+        mat-table
+        matTableExporter
+        [dataSource]="dataSource"
+        #exporter="matTableExporter"
+      >
+        <ng-container matColumnDef="n" sticky>
+          <th mat-header-cell *matHeaderCellDef>N</th>
+          <td mat-cell *matCellDef="let row">{{ row.n }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="evento" sticky>
+          <th class="ancho" mat-header-cell *matHeaderCellDef>Evento</th>
+          <td class="ancho" mat-cell *matCellDef="let row">{{ row.evento }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="reloj" sticky>
+          <th mat-header-cell *matHeaderCellDef class="border-right">Reloj</th>
+          <td mat-cell *matCellDef="let row" class="border-right">
+            {{ row.reloj }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="llegada">
+          <th mat-header-cell *matHeaderCellDef>Llegada</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.llegada }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="proximaLlegada">
+          <th mat-header-cell *matHeaderCellDef>Próxima llegada</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.proximaLlegada }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rndVencida">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            RND vencida
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.rndVencida }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vencida">
+          <th mat-header-cell *matHeaderCellDef>Vencida?</th>
+          <td mat-cell *matCellDef="let row">{{ row.vencida }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rndActualiza">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            RND sabe dónde actualizar
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.rndActualiza }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actualiza">
+          <th mat-header-cell *matHeaderCellDef>Sabe dónde actualizar?</th>
+          <td mat-cell *matCellDef="let row">{{ row.actualiza }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rndActualiza2">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            RND actualización
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.rndActualiza2 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actualizacion">
+          <th mat-header-cell *matHeaderCellDef>Actualización</th>
+          <td mat-cell *matCellDef="let row">{{ row.actualizacion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="proximaActualizacion">
+          <th mat-header-cell *matHeaderCellDef>Próxima actualización</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.proximaActualizacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="proximaInformacion">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            Proxima información
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.proximaInformacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rndPaga">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            RND paga
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.rndPaga }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paga">
+          <th mat-header-cell *matHeaderCellDef>Paga?</th>
+          <td mat-cell *matCellDef="let row">{{ row.paga }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rndCobro">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            RND cobro
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.rndCobro }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cobro">
+          <th mat-header-cell *matHeaderCellDef>Cobro</th>
+          <td mat-cell *matCellDef="let row">{{ row.cobro }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="proximoCobro">
+          <th mat-header-cell *matHeaderCellDef>Próximo cobro</th>
+          <td mat-cell *matCellDef="let row">{{ row.proximoCobro }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoCajaActualizacion">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            Estado (CA)
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.estadoCajaActualizacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoCajaInformacion">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            Estado (CI)
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.estadoCajaInformacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoCajaCobro1">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            Estado (CC1)
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.estadoCajaCobro1 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="proximoFinCobroCajaCobro1">
+          <th mat-header-cell *matHeaderCellDef>Próximo fin cobro (CC1)</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.proximoFinCobroCajaCobro1 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoCajaCobro2">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            Estado (CC2)
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.estadoCajaCobro2 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="proximoFinCobroCajaCobro2">
+          <th mat-header-cell *matHeaderCellDef>Próximo fin cobro (CC2)</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.proximoFinCobroCajaCobro2 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoCajaCobro3">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            Estado (CC3)
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.estadoCajaCobro3 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="proximoFinCobroCajaCobro3">
+          <th mat-header-cell *matHeaderCellDef>Próximo fin cobro (CC3)</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.proximoFinCobroCajaCobro3 }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colaActualizacion">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            Cola actualización
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.colaActualizacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colaInformacion">
+          <th mat-header-cell *matHeaderCellDef>Cola información</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.colaInformacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colaCobro">
+          <th mat-header-cell *matHeaderCellDef>Cola cobro</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.colaCobro }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acumPersonasNoPagan">
+          <th mat-header-cell *matHeaderCellDef class="border-left">
+            Acum. personas no pagan
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-left">
+            {{ row.acumPersonasNoPagan }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acumTiempoPermanPersonas">
+          <th mat-header-cell *matHeaderCellDef>
+            Acum. tiempo permanencia personas
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.acumTiempoPermanPersonas }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantPersonas">
+          <th mat-header-cell *matHeaderCellDef>Cantidad personas</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.cantPersonas }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acumTiempoEsperaColaCobro">
+          <th mat-header-cell *matHeaderCellDef>
+            Acum. tiempo espera cajas cobro
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.acumTiempoEsperaColaCobro }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantPersonasEsperaColaCobro">
+          <th mat-header-cell *matHeaderCellDef>
+            Cantidad personas espera cajas cobro
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.cantPersonasEsperaColaCobro }}
+          </td>
+        </ng-container>
+
+        <!-- Columnas dinamicas: objetos Persona -->
+        <ng-container
+          *ngFor="let column of columns"
+          matColumnDef="{{ column.columnDef }}"
+        >
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            ngClass="{{ column.header.startsWith('Estado') && 'border-left' }}"
+          >
+            {{ column.header }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            ngClass="{{ column.header.startsWith('Estado') && 'border-left' }}"
+          >
+            {{ column.cell(row) }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+  </mat-card>
+</div>

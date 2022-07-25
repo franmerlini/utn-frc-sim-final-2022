@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~normalize.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+body {
+  background-color: #ebebeb;
+}
+
+.snackbar-error {
+  color: #571206;
+  background-color: #edd3c3;
+  border-color: #e6c6c3;
+  font-weight: bold;
+
+  .mat-button {
+    background: #edbdaa;
+    color: #571206;
+    font-weight: bold;
+    outline: 0;
+  }
+}

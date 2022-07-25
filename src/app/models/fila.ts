@@ -1,0 +1,36 @@
+export interface Fila {
+  n: string;
+  evento: string;
+  reloj: string;
+  llegada: string;
+  proximaLlegada: string;
+  rndVencida: string;
+  vencida: string;
+  rndActualiza: string;
+  actualiza: string;
+  rndActualiza2: string;
+  actualizacion: string;
+  proximaActualizacion: string;
+  proximaInformacion: string;
+  rndPaga: string;
+  paga: string;
+  rndCobro: string;
+  cobro: string;
+  proximoCobro: string;
+  estadoCajaActualizacion: string;
+  estadoCajaInformacion: string;
+  estadoCajaCobro1: string;
+  proximoFinCobroCajaCobro1: string;
+  estadoCajaCobro2: string;
+  proximoFinCobroCajaCobro2: string;
+  estadoCajaCobro3: string;
+  proximoFinCobroCajaCobro3: string;
+  colaActualizacion: string;
+  colaInformacion: string;
+  colaCobro: string;
+  acumPersonasNoPagan: string;
+  acumTiempoPermanPersonas: string;
+  cantPersonas: string;
+  acumTiempoEsperaColaCobro: string;
+  cantPersonasEsperaColaCobro: string;
+}
