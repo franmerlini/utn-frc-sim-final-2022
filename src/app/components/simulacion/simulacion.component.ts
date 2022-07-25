@@ -106,18 +106,18 @@ export class SimulacionComponent implements OnInit {
           idPrimerPersona,
           idUltimaPersona,
         ] = this.simulationService.simulate(
-          this.txtX.value,
-          this.txtN.value,
-          this.txtDesde.value,
-          this.txtHasta.value,
-          this.txtProbVencida.value,
-          this.txtProbActualiza.value,
-          this.txtProbPaga.value,
-          this.txtMediaPoisson.value,
-          this.txtAUniforme.value,
-          this.txtBUniforme.value,
-          this.txtMediaExpNeg.value,
-          this.txtCte.value
+          +this.txtX.value,
+          +this.txtN.value,
+          +this.txtDesde.value,
+          +this.txtHasta.value,
+          +this.txtProbVencida.value,
+          +this.txtProbActualiza.value,
+          +this.txtProbPaga.value,
+          +this.txtMediaPoisson.value,
+          +this.txtAUniforme.value,
+          +this.txtBUniforme.value,
+          +this.txtMediaExpNeg.value,
+          +this.txtCte.value
         );
 
         this.consignas = consignas;

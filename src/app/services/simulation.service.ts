@@ -868,7 +868,7 @@ export class SimulationService {
       // agregar filas desdeHasta
       if (reloj >= desde && reloj <= hasta) {
         if (esPrimerPersona) {
-          idPrimerPersona = persona.id;
+          idPrimerPersona = persona.id === 0 ? 1 : persona.id;
           esPrimerPersona = false;
         }
         filas.push(this.transformarVectorEstadoAFila(vectorEstado));
@@ -946,12 +946,12 @@ export class SimulationService {
   }
 
   private uniform(a: number, b: number, rnd: number): number {
-    return +(a + rnd * (b - a)).toFixed(2);
+    return Number((a + rnd * (b - a)).toFixed(2));
   }
 
   private negativeExponential(mean: number, rnd: number): number {
     rnd === 1 && (rnd = 0.5); // hardcodeo para que no de log de 0
-    return +(-mean * Math.log(1 - rnd)).toFixed(2);
+    return Number((-mean * Math.log(1 - rnd)).toFixed(2));
   }
 
   private determineBooleanResult(prob: number, rnd: number): boolean {
