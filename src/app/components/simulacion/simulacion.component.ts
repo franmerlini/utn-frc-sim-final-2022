@@ -12,7 +12,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Column } from 'src/app/models/column';
 import { ColumnsService } from 'src/app/services/columns.service';
 import { SimulationService } from 'src/app/services/simulation.service';
-import { SpinnerService } from 'src/app/services/spinner.service';
 import { CustomValidators } from 'src/app/shared/custom-validators/custom-validators';
 
 @Component({
@@ -31,14 +30,12 @@ export class SimulacionComponent implements OnInit {
   public displayedColumns: string[];
   public consignas: string[] = [];
   public submitted: boolean = false;
-  private prevValue: number;
 
   constructor(
     private fb: FormBuilder,
     private simulationService: SimulationService,
     private snackBar: MatSnackBar,
-    private columnsService: ColumnsService,
-    private spinnerService: SpinnerService
+    private columnsService: ColumnsService
   ) {}
 
   ngOnInit(): void {
@@ -196,51 +193,51 @@ export class SimulacionComponent implements OnInit {
     });
   }
 
-  get txtX() {
+  get txtX(): AbstractControl {
     return this.form.get('txtX') as AbstractControl;
   }
 
-  get txtN() {
+  get txtN(): AbstractControl {
     return this.form.get('txtN') as AbstractControl;
   }
 
-  get txtDesde() {
+  get txtDesde(): AbstractControl {
     return this.form.get('txtDesde') as AbstractControl;
   }
 
-  get txtHasta() {
+  get txtHasta(): AbstractControl {
     return this.form.get('txtHasta') as AbstractControl;
   }
 
-  get txtProbVencida() {
+  get txtProbVencida(): AbstractControl {
     return this.form.get('txtProbVencida') as AbstractControl;
   }
 
-  get txtProbActualiza() {
+  get txtProbActualiza(): AbstractControl {
     return this.form.get('txtProbActualiza') as AbstractControl;
   }
 
-  get txtProbPaga() {
+  get txtProbPaga(): AbstractControl {
     return this.form.get('txtProbPaga') as AbstractControl;
   }
 
-  get txtMediaPoisson() {
+  get txtMediaPoisson(): AbstractControl {
     return this.form.get('txtMediaPoisson') as AbstractControl;
   }
 
-  get txtAUniforme() {
+  get txtAUniforme(): AbstractControl {
     return this.form.get('txtAUniforme') as AbstractControl;
   }
 
-  get txtBUniforme() {
+  get txtBUniforme(): AbstractControl {
     return this.form.get('txtBUniforme') as AbstractControl;
   }
 
-  get txtMediaExpNeg() {
+  get txtMediaExpNeg(): AbstractControl {
     return this.form.get('txtMediaExpNeg') as AbstractControl;
   }
 
-  get txtCte() {
+  get txtCte(): AbstractControl {
     return this.form.get('txtCte') as AbstractControl;
   }
 }
