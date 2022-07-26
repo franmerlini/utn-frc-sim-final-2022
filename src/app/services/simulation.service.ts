@@ -104,14 +104,14 @@ export class SimulationService {
         proximaLlegada = reloj + llegada;
 
         // determinar si tiene factura vencida
-        rndVencida = +Math.random().toFixed(2);
+        rndVencida = this.truncateDecimals(Math.random());
         vencida = this.determineBooleanResult(probVencida, rndVencida);
 
         // Caso 1): factura NO vencida
         // Respuesta: ir a pagar
         if (!vencida) {
           // generar cobro
-          rndCobro = +Math.random().toFixed(2);
+          rndCobro = this.truncateDecimals(Math.random());
           cobro = this.uniform(aUniforme, bUniforme, rndCobro);
           proximoCobro = reloj + cobro;
 
@@ -131,14 +131,14 @@ export class SimulationService {
         // Respuesta: ir a actualizar o ir a informarse
         else {
           // determinar si sabe actualizar
-          rndActualiza = +Math.random().toFixed(2);
+          rndActualiza = this.truncateDecimals(Math.random());
           actualiza = this.determineBooleanResult(probActualiza, rndActualiza);
 
           // Caso 2.1): sabe actualizar
           // Respuesta: ir a actualizar
           if (actualiza) {
             // determinar proxima actualizacion
-            rndActualiza2 = +Math.random().toFixed(2);
+            rndActualiza2 = this.truncateDecimals(Math.random());
             actualizacion = this.negativeExponential(
               mediaExpNeg,
               rndActualiza2
@@ -235,7 +235,7 @@ export class SimulationService {
             proximaLlegada = reloj + llegada;
 
             // determinar si tiene factura vencida
-            rndVencida = +Math.random().toFixed(2);
+            rndVencida = this.truncateDecimals(Math.random());
             vencida = this.determineBooleanResult(probVencida, rndVencida);
 
             // Caso 1): factura NO vencida
@@ -244,7 +244,7 @@ export class SimulationService {
               // Caso 1.1): alguna caja de cobro libre
               if (caja3.estaLibre() || caja4.estaLibre() || caja5.estaLibre()) {
                 // generar cobro
-                rndCobro = +Math.random().toFixed(2);
+                rndCobro = this.truncateDecimals(Math.random());
                 cobro = this.uniform(aUniforme, bUniforme, rndCobro);
                 proximoCobro = reloj + cobro;
 
@@ -303,7 +303,7 @@ export class SimulationService {
             // Respuesta: ir a actualizar o ir a informarse
             else {
               // determinar si sabe actualizar
-              rndActualiza = +Math.random().toFixed(2);
+              rndActualiza = this.truncateDecimals(Math.random());
               actualiza = this.determineBooleanResult(
                 probActualiza,
                 rndActualiza
@@ -315,7 +315,7 @@ export class SimulationService {
                 // Caso 2.1.1): caja de actualizacion libre
                 if (caja1.estaLibre()) {
                   // determinar proxima actualizacion
-                  rndActualiza2 = +Math.random().toFixed(2);
+                  rndActualiza2 = this.truncateDecimals(Math.random());
                   actualizacion = this.negativeExponential(
                     mediaExpNeg,
                     rndActualiza2
@@ -424,7 +424,7 @@ export class SimulationService {
 
             if (personaFinActualizacion) {
               // determinar si paga
-              rndPaga = +Math.random().toFixed(2);
+              rndPaga = this.truncateDecimals(Math.random());
               paga = this.determineBooleanResult(probPaga, rndPaga);
 
               // Caso 1): paga
@@ -437,7 +437,7 @@ export class SimulationService {
                   caja5.estaLibre()
                 ) {
                   // determinar proximo cobro
-                  rndCobro = +Math.random().toFixed(2);
+                  rndCobro = this.truncateDecimals(Math.random());
                   cobro = this.negativeExponential(mediaExpNeg, rndCobro);
                   proximoCobro = reloj + cobro;
 
@@ -534,7 +534,7 @@ export class SimulationService {
 
               if (siguientePersona) {
                 // determinar proxima actualizacion
-                rndActualiza2 = +Math.random().toFixed(2);
+                rndActualiza2 = this.truncateDecimals(Math.random());
                 actualizacion = this.negativeExponential(
                   mediaExpNeg,
                   rndActualiza2
@@ -602,7 +602,7 @@ export class SimulationService {
               // Caso 1): caja de actualizacion libre
               if (caja1.estaLibre()) {
                 // determinar proxima actualizacion
-                rndActualiza2 = +Math.random().toFixed(2);
+                rndActualiza2 = this.truncateDecimals(Math.random());
                 actualizacion = this.negativeExponential(
                   mediaExpNeg,
                   rndActualiza2
@@ -764,7 +764,7 @@ export class SimulationService {
                   reloj - siguientePersona.tiempoLlegada;
 
                 // determinar proximo cobro
-                rndCobro = +Math.random().toFixed(2);
+                rndCobro = this.truncateDecimals(Math.random());
                 cobro = this.uniform(aUniforme, bUniforme, rndCobro);
                 proximoCobro = reloj + cobro;
 
@@ -935,7 +935,7 @@ export class SimulationService {
     let a = Math.exp(-mean);
 
     do {
-      let u = +Math.random().toFixed(2);
+      let u = this.truncateDecimals(Math.random());
       p *= u;
       x += 1;
     } while (p >= a);
@@ -956,6 +956,10 @@ export class SimulationService {
 
   private determineBooleanResult(prob: number, rnd: number): boolean {
     return rnd <= prob - 0.01;
+  }
+
+  private truncateDecimals(rnd: number): number {
+    return Number(rnd.toString().slice(0, 4));
   }
 
   private transformarVectorEstadoAFila(vectorEstado: any): Fila {
