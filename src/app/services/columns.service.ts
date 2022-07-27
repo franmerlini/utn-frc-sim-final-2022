@@ -1,58 +1,61 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Column } from '../models/column';
+import { HEADER_COLUMNS, HEADER_GROUP_COLUMNS } from '../consts/consts';
+import { HeaderColumn } from '../models/header-column';
+import { HeaderGroupColumn } from '../models/header-group-column';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColumnsService {
-  constructor() {}
+  private headerGroupColumns: HeaderGroupColumn[] = HEADER_GROUP_COLUMNS;
+  private displayedHeaderGroupColumns: string[] = [];
+  private tempHeaderGroupColumns: HeaderGroupColumn[] = [];
+  private tempDisplayedHeaderGroupColumns: string[] = [];
 
-  private displayedColumns: string[] = [
-    'n',
-    'evento',
-    'reloj',
-    'llegada',
-    'proximaLlegada',
-    'rndVencida',
-    'vencida',
-    'rndActualiza',
-    'actualiza',
-    'rndActualiza2',
-    'actualizacion',
-    'proximaActualizacion',
-    'proximaInformacion',
-    'rndPaga',
-    'paga',
-    'rndCobro',
-    'cobro',
-    'proximoCobro',
-    'estadoCajaActualizacion',
-    'estadoCajaInformacion',
-    'estadoCajaCobro1',
-    'proximoFinCobroCajaCobro1',
-    'estadoCajaCobro2',
-    'proximoFinCobroCajaCobro2',
-    'estadoCajaCobro3',
-    'proximoFinCobroCajaCobro3',
-    'colaActualizacion',
-    'colaInformacion',
-    'colaCobro',
-    'acumPersonasNoPagan',
-    'acumTiempoPermanPersonas',
-    'cantPersonas',
-    'acumTiempoEsperaColaCobro',
-    'cantPersonasEsperaColaCobro',
-  ];
-  private columns: Column[] = [];
+  private columns: HeaderColumn[] = HEADER_COLUMNS;
+  private displayedColumns: string[] = [];
+  private tempColumns: HeaderColumn[] = [];
   private tempDisplayedColumns: string[] = [];
 
-  public addColumn(column: Column): void {
-    this.columns.push(column);
+  constructor() {
+    this.headerGroupColumns.map((c) => {
+      this.displayedHeaderGroupColumns.push(c.columnDef);
+    });
+
+    this.columns.map((c) => {
+      this.displayedColumns.push(c.columnDef);
+    });
   }
 
-  public getColumns(): Observable<Column[]> {
-    return of(this.columns);
+  public getHeaderGroupColumns(): Observable<HeaderGroupColumn[]> {
+    return of([...this.headerGroupColumns, ...this.tempHeaderGroupColumns]);
+  }
+
+  public getDisplayedHeaderGroupColumns(): Observable<string[]> {
+    return of(this.tempDisplayedHeaderGroupColumns);
+  }
+
+  public addHeaderGroupColumn(column: HeaderGroupColumn): void {
+    this.tempHeaderGroupColumns.push(column);
+  }
+
+  public addDisplayedHeaderGroupColumn(columnsNames: string[]): void {
+    columnsNames.map((c) => {
+      this.tempDisplayedHeaderGroupColumns.push(c);
+    });
+  }
+
+  public getColumns(): Observable<HeaderColumn[]> {
+    return of([...this.columns, ...this.tempColumns]);
+  }
+
+  public getDisplayedColumns(): Observable<string[]> {
+    return of(this.tempDisplayedColumns);
+  }
+
+  public addColumn(column: HeaderColumn): void {
+    this.tempColumns.push(column);
   }
 
   public addDisplayedColumn(columnsNames: string[]): void {
@@ -61,12 +64,10 @@ export class ColumnsService {
     });
   }
 
-  public getDisplayedColumns(): Observable<string[]> {
-    return of([...this.displayedColumns, ...this.tempDisplayedColumns]);
-  }
-
   public resetColumns(): void {
-    this.columns = [];
+    this.tempHeaderGroupColumns = [];
+    this.tempDisplayedHeaderGroupColumns = [];
+    this.tempColumns = [];
     this.tempDisplayedColumns = [];
   }
 }

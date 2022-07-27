@@ -7,7 +7,6 @@ td.mat-footer-cell {
 
 .mat-header-cell {
   font-weight: bold;
-  border-bottom: 2px solid #000000;
 }
 
 mat-form-field {
@@ -23,6 +22,12 @@ mat-form-field {
 .border-right {
   border-right-color: #000000;
   border-right-width: 1px;
+  border-right-style: solid;
+}
+
+.border-right-2px {
+  border-right-color: #000000;
+  border-right-width: 2px;
   border-right-style: solid;
 }
 
@@ -59,4 +64,30 @@ table {
 .mat-row:hover .mat-cell {
   border-top: 0.5px solid black;
   border-bottom: 0.5px solid black;
+}
+
+.all-borders {
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-left: 1px solid #000000;
+}
+
+.bottom-border {
+  border-bottom: 1px solid #000000;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  border-left: 1px solid #000000;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  border-right: 1px solid #000000;
+}
+
+.remove-border-left {
+  border-left: 0;
 }

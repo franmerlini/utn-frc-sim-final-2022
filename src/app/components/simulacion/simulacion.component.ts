@@ -8,8 +8,10 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Column } from 'src/app/models/column';
+import { COLUMNS_WITH_BORDER } from 'src/app/consts/consts';
 import { Fila } from 'src/app/models/fila';
+import { HeaderColumn } from 'src/app/models/header-column';
+import { HeaderGroupColumn } from 'src/app/models/header-group-column';
 import { ColumnsService } from 'src/app/services/columns.service';
 import { SimulationService } from 'src/app/services/simulation.service';
 import { CustomValidators } from 'src/app/shared/custom-validators/custom-validators';
@@ -25,11 +27,13 @@ export class SimulacionComponent implements OnInit {
   public form: FormGroup;
   public loading: boolean = true;
   public dataSource: MatTableDataSource<any>;
-  public columns: Column[];
+  public columns: HeaderColumn[];
   public displayedColumns: string[];
+  public headerGroupColumns: HeaderGroupColumn[];
+  public displayedHeaderGroupColumns: string[] = [];
+  public clickedRows = new Set<Fila>();
   public consignas: string[] = [];
   public submitted: boolean = false;
-  public clickedRows = new Set<Fila>();
 
   constructor(
     private fb: FormBuilder,
@@ -117,33 +121,52 @@ export class SimulacionComponent implements OnInit {
 
         this.consignas = consignas;
 
+        this.columnsService.addHeaderGroupColumn({
+          columnDef: 'personas',
+          header: 'Personas',
+          colspan: idUltimaPersona * 2,
+        });
+
         for (let i = idPrimerPersona; i <= idUltimaPersona; i++) {
+          let columnDef = `estadoP${i}`;
           this.columnsService.addColumn({
-            columnDef: `estadoP${i}`,
+            columnDef,
             header: `Estado P${i}`,
-            cell: (fila: any) => {
-              const aux = `estadoP${i}`;
-              if (fila[aux] !== '') {
-                return fila[aux];
+            cell: (fila: any, columnDef: string) => {
+              if (fila[columnDef] !== '') {
+                return fila[columnDef];
               } else {
                 return '';
               }
             },
           });
 
+          columnDef = `tiempoLlegadaP${i}`;
           this.columnsService.addColumn({
-            columnDef: `tiempoLlegadaP${i}`,
+            columnDef,
             header: `Tiempo llegada P${i}`,
-            cell: (fila: any) => {
-              const aux = `tiempoLlegadaP${i}`;
-              if (fila[aux] !== '') {
-                return fila[aux];
+            cell: (fila: any, columnDef: string) => {
+              if (fila[columnDef] !== '') {
+                return fila[columnDef];
               } else {
                 return '';
               }
             },
           });
         }
+
+        this.columnsService.getHeaderGroupColumns().subscribe((data) => {
+          this.headerGroupColumns = data;
+          this.columnsService.addDisplayedHeaderGroupColumn(
+            this.headerGroupColumns.map((c) => c.columnDef)
+          );
+        });
+
+        this.columnsService
+          .getDisplayedHeaderGroupColumns()
+          .subscribe((data) => {
+            this.displayedHeaderGroupColumns = data;
+          });
 
         this.columnsService.getColumns().subscribe((data) => {
           this.columns = data;
@@ -160,6 +183,15 @@ export class SimulacionComponent implements OnInit {
         this.loading = false;
       } catch (e) {
         console.error(e);
+        this.snackBar.open(
+          '¡Ooops! Algo no funcionó como se esperaba.',
+          'Cerrar',
+          {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            panelClass: ['snackbar-error'],
+          }
+        );
       }
     } else {
       this.snackBar.open(
@@ -190,6 +222,21 @@ export class SimulacionComponent implements OnInit {
       txtMediaExpNeg: 40,
       txtCte: 20,
     });
+  }
+
+  public isSticky(column: HeaderColumn): boolean {
+    return (
+      column.columnDef === 'n' ||
+      column.columnDef === 'evento' ||
+      column.columnDef === 'reloj'
+    );
+  }
+
+  public needsBorder(column: HeaderColumn): boolean {
+    return (
+      COLUMNS_WITH_BORDER.some((c) => c === column.columnDef) ||
+      column.header.startsWith('Estado')
+    );
   }
 
   public onRowClicked(row: Fila): void {
