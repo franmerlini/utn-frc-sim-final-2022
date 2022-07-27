@@ -270,7 +270,7 @@
       <mat-divider></mat-divider>
     </div>
 
-    <div class="col mt-3 overflow-auto">
+    <div class="col mt-3 overflow-auto mh-600">
       <table
         mat-table
         matTableExporter
@@ -552,10 +552,17 @@
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="onRowClicked(row)"
+          [class.clicked-row]="clickedRows.has(row)"
+        ></tr>
       </table>
     </div>
-    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
   </mat-card>
 </div>

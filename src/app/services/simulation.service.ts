@@ -38,7 +38,7 @@ export class SimulationService {
     bUniforme: number,
     mediaExpNeg: number,
     cte: number
-  ): [Fila[], number, string[], number, number] {
+  ): [Fila[], string[], number, number] {
     let evento = '';
     let reloj = -1;
     let llegada = -1;
@@ -96,7 +96,7 @@ export class SimulationService {
       // Evento 2: llegada de la primer persona
       else if (i === 1) {
         cantPersonas++;
-        evento = `Llegada P${cantPersonas}`;
+        evento = `Llegada (P${cantPersonas})`;
         vectorEstado[4] && (reloj = +vectorEstado[4]);
 
         // generar la proxima llegada
@@ -227,7 +227,7 @@ export class SimulationService {
         switch (idx) {
           case 0:
             cantPersonas++;
-            evento = `Llegada P${cantPersonas}`;
+            evento = `Llegada (P${cantPersonas})`;
             vectorEstado[4] && (reloj = +vectorEstado[4]);
 
             // generar la proxima llegada
@@ -407,13 +407,6 @@ export class SimulationService {
             break;
 
           case 1:
-            evento = 'Fin actualización';
-            vectorEstado[11] && (reloj = +vectorEstado[11]);
-
-            // **************************************************************** Paso 1 ****************************************************************
-            // determinar proximo estado de la persona
-            // **************************************************************** Paso 1 ****************************************************************
-
             let personaFinActualizacion;
             for (let i = 0; i < personas.length; i++) {
               if (personas[i].estado === 'SA (CA)') {
@@ -421,6 +414,13 @@ export class SimulationService {
                 break;
               }
             }
+
+            evento = `Fin actualización (P${personaFinActualizacion?.id})`;
+            vectorEstado[11] && (reloj = +vectorEstado[11]);
+
+            // **************************************************************** Paso 1 ****************************************************************
+            // determinar proximo estado de la persona
+            // **************************************************************** Paso 1 ****************************************************************
 
             if (personaFinActualizacion) {
               // determinar si paga
@@ -583,13 +583,6 @@ export class SimulationService {
             break;
 
           case 2:
-            evento = 'Fin información';
-            vectorEstado[12] && (reloj = +vectorEstado[12]);
-
-            // **************************************************************** Paso 1 ****************************************************************
-            // determinar proximo estado de la persona
-            // **************************************************************** Paso 1 ****************************************************************
-
             let personaFinInformacion;
             for (let i = 0; i < personas.length; i++) {
               if (personas[i].estado === 'SA (CI)') {
@@ -597,6 +590,13 @@ export class SimulationService {
                 break;
               }
             }
+
+            evento = `Fin información (${personaFinInformacion?.id})`;
+            vectorEstado[12] && (reloj = +vectorEstado[12]);
+
+            // **************************************************************** Paso 1 ****************************************************************
+            // determinar proximo estado de la persona
+            // **************************************************************** Paso 1 ****************************************************************
 
             if (personaFinInformacion) {
               // Caso 1): caja de actualizacion libre
@@ -706,42 +706,45 @@ export class SimulationService {
           case 3:
           case 4:
           case 5:
-            let cajaFinCobro: CajaCobro;
+            let personaFinCobro;
+            for (let i = 0; i < personas.length; i++) {
+              if (personas[i].estado === `SA (CC${idx - 2})`) {
+                personaFinCobro = personas[i];
+                break;
+              }
+            }
 
+            let cajaFinCobro;
             if (idx === 3) {
-              cajaFinCobro = caja3;
-              evento = 'Fin cobro CC1';
+              evento = `Fin cobro CC1 (P${personaFinCobro?.id})`;
               vectorEstado[21] && (reloj = +vectorEstado[21]);
+              cajaFinCobro = caja3;
             } else if (idx === 4) {
-              cajaFinCobro = caja4;
-              evento = 'Fin cobro CC2';
+              evento = `Fin cobro CC2 (P${personaFinCobro?.id})`;
               vectorEstado[23] && (reloj = +vectorEstado[23]);
+              cajaFinCobro = caja4;
             } else {
-              cajaFinCobro = caja5;
-              evento = 'Fin cobro CC3';
+              evento = `Fin cobro CC3 (P${personaFinCobro?.id})`;
               vectorEstado[25] && (reloj = +vectorEstado[25]);
+              cajaFinCobro = caja5;
             }
 
             // **************************************************************** Paso 1 ****************************************************************
             // determinar proximo estado de la persona
             // **************************************************************** Paso 1 ****************************************************************
 
-            for (let i = 0; i < personas.length; i++) {
-              if (personas[i].estado === `SA (CC${cajaFinCobro.id - 2})`) {
-                // acumular el tiempo de permanencia
-                acumTiempoPermanPersonas += reloj - personas[i].tiempoLlegada;
+            if (personaFinCobro) {
+              // acumular el tiempo de permanencia
+              acumTiempoPermanPersonas += reloj - personaFinCobro.tiempoLlegada;
 
-                // destruir el objeto Persona
-                personas[i].destruir();
+              // destruir el objeto Persona
+              personaFinCobro.destruir();
 
-                // actualizar el vectorEstado
-                this.actualizarVectorEstado(vectorEstado, personas[i]);
+              // actualizar el vectorEstado
+              this.actualizarVectorEstado(vectorEstado, personaFinCobro);
 
-                // eliminar el objeto Persona del vector
-                personas.splice(i, 1);
-
-                break;
-              }
+              // eliminar el objeto Persona del vector
+              personas.splice(personas.indexOf(personaFinCobro), 1);
             }
 
             // **************************************************************** Paso 2 ****************************************************************
@@ -902,7 +905,7 @@ export class SimulationService {
     // c) El porcentaje de personas que no pagan.
     consignas.push(((acumPersonasNoPagan / cantPersonas) * 100).toFixed(2));
 
-    return [filas, cantPersonas, consignas, idPrimerPersona, idUltimaPersona];
+    return [filas, consignas, idPrimerPersona, idUltimaPersona];
   }
 
   private actualizarVectorEstado(vectorEstado: any, persona: Persona) {

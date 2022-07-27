@@ -6,10 +6,10 @@ import {
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Column } from 'src/app/models/column';
+import { Fila } from 'src/app/models/fila';
 import { ColumnsService } from 'src/app/services/columns.service';
 import { SimulationService } from 'src/app/services/simulation.service';
 import { CustomValidators } from 'src/app/shared/custom-validators/custom-validators';
@@ -20,7 +20,6 @@ import { CustomValidators } from 'src/app/shared/custom-validators/custom-valida
   styleUrls: ['./simulacion.component.scss'],
 })
 export class SimulacionComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(FormGroupDirective) formRef: FormGroupDirective;
 
   public form: FormGroup;
@@ -30,6 +29,7 @@ export class SimulacionComponent implements OnInit {
   public displayedColumns: string[];
   public consignas: string[] = [];
   public submitted: boolean = false;
+  public clickedRows = new Set<Fila>();
 
   constructor(
     private fb: FormBuilder,
@@ -99,26 +99,21 @@ export class SimulacionComponent implements OnInit {
       this.columnsService.resetColumns();
 
       try {
-        const [
-          filas,
-          cantPersonas,
-          consignas,
-          idPrimerPersona,
-          idUltimaPersona,
-        ] = this.simulationService.simulate(
-          +this.txtX.value,
-          +this.txtN.value,
-          +this.txtDesde.value,
-          +this.txtHasta.value,
-          +this.txtProbVencida.value,
-          +this.txtProbActualiza.value,
-          +this.txtProbPaga.value,
-          +this.txtMediaPoisson.value,
-          +this.txtAUniforme.value,
-          +this.txtBUniforme.value,
-          +this.txtMediaExpNeg.value,
-          +this.txtCte.value
-        );
+        const [filas, consignas, idPrimerPersona, idUltimaPersona] =
+          this.simulationService.simulate(
+            +this.txtX.value,
+            +this.txtN.value,
+            +this.txtDesde.value,
+            +this.txtHasta.value,
+            +this.txtProbVencida.value,
+            +this.txtProbActualiza.value,
+            +this.txtProbPaga.value,
+            +this.txtMediaPoisson.value,
+            +this.txtAUniforme.value,
+            +this.txtBUniforme.value,
+            +this.txtMediaExpNeg.value,
+            +this.txtCte.value
+          );
 
         this.consignas = consignas;
 
@@ -162,7 +157,6 @@ export class SimulacionComponent implements OnInit {
         });
 
         this.dataSource = new MatTableDataSource(filas);
-        this.dataSource.paginator = this.paginator;
         this.loading = false;
       } catch (e) {
         console.error(e);
@@ -196,6 +190,14 @@ export class SimulacionComponent implements OnInit {
       txtMediaExpNeg: 40,
       txtCte: 20,
     });
+  }
+
+  public onRowClicked(row: Fila): void {
+    if (this.clickedRows.has(row)) {
+      this.clickedRows.delete(row);
+    } else {
+      this.clickedRows.add(row);
+    }
   }
 
   get txtX(): AbstractControl {

@@ -2,11 +2,12 @@ th.mat-header-cell,
 td.mat-cell,
 td.mat-footer-cell {
   text-align: center;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 .mat-header-cell {
   font-weight: bold;
+  border-bottom: 2px solid #000000;
 }
 
 mat-form-field {
@@ -36,4 +37,26 @@ mat-form-field {
   td {
     padding: 0.5rem 1rem;
   }
+}
+
+.mh-600 {
+  max-height: 600px;
+}
+
+table {
+  border-collapse: separate;
+}
+
+.clicked-row {
+  background-color: orange;
+  font-weight: bold;
+}
+
+.mat-row .mat-cell {
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-top: 0.5px solid black;
+  border-bottom: 0.5px solid black;
 }
